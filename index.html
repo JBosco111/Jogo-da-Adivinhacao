@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Jogo de Adivinhação</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<main class="game-container">
+    <h1>🎯 Adivinhe o Número</h1>
+
+    <p class="subtitle">Escolha um número entre <strong>1 e 100</strong></p>
+
+    <input type="number" id="palpite" placeholder="Seu palpite..." />
+
+    <div class="buttons">
+        <button onclick="chutar()">Chutar</button>
+        <button class="reset" onclick="reiniciarJogo()">Reiniciar</button>
+    </div>
+
+    <p id="mensagem" class="mensagem"></p>
+    <p id="tentativas"></p>
+
+    <!-- Barra de progresso -->
+    <div class="progress">
+        <div id="barra"></div>
+    </div>
+
+    <!-- Histórico -->
+    <div class="historico">
+        <h3>📜 Palpites:</h3>
+        <ul id="listaPalpites"></ul>
+    </div>
+
+    <!-- Ranking -->
+    <div class="ranking">
+        <h3>🏆 Ranking</h3>
+        <ul id="ranking"></ul>
+    </div>
+
+    <!-- Controle de som -->
+    <div class="audio-controls">
+        <button id="btnMute" onclick="alternarMute()">🔊</button>
+
+        <input 
+            type="range" 
+            min="0" 
+            max="1" 
+            step="0.1" 
+            value="0.3" 
+            onchange="alterarVolume(this.value)"
+        />
+    </div>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
