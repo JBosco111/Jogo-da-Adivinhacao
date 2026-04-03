@@ -43,7 +43,7 @@ Tecnologias utilizadas
 
 Demonstração
 
-https://jbosco111.github.io/Jogo-da-Advinha--o/
+https://jbosco111.github.io/Jogo-da-Adivinhacao/
 
 ---
 
