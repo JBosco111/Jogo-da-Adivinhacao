@@ -7,7 +7,7 @@ let lista = [];
 let pontuacao = 0;
 
 // =======================
-// ÁUDIO 8-BIT (WEB AUDIO)
+// ÁUDIO 8-BIT
 // =======================
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -30,7 +30,6 @@ function tocarBeep(freq, duracao, tipo = "square") {
 
     osc.type = tipo;
     osc.frequency.value = freq;
-
     gain.gain.value = volume;
 
     osc.connect(gain);
@@ -74,7 +73,9 @@ function alternarMute() {
     mutado = !mutado;
 
     const btn = document.getElementById("btnMute");
-    btn.textContent = mutado ? "🔇" : "🔊";
+    if (btn) {
+        btn.textContent = mutado ? "🔇" : "🔊";
+    }
 }
 
 function alterarVolume(valor) {
@@ -108,7 +109,7 @@ function atualizarTentativas() {
 function atualizarBarra() {
     const barra = document.getElementById("barra");
     const porcentagem = (tentativasRestantes / 10) * 100;
-    barra.style.width = porcentagem + "%";
+    if (barra) barra.style.width = porcentagem + "%";
 }
 
 function atualizarHistorico(valor) {
@@ -145,13 +146,27 @@ function chutar() {
     atualizarHistorico(valor);
     atualizarBarra();
 
+    // 🎉 ACERTO COM ANIMAÇÃO + RESET AUTOMÁTICO
     if (valor === numeroSecreto) {
         somAcerto();
         mostrarMensagem(`🎉 Acertou! Pontos: ${pontuacao}`, "acerto");
         salvarRanking(pontuacao);
+
+        input.value = "";
+
+        const container = document.querySelector(".game-container");
+        container.classList.add("win");
+
+        setTimeout(() => {
+            container.classList.remove("win");
+            document.getElementById("mensagem").textContent = "";
+            iniciarJogo();
+        }, 2000);
+
         return;
     }
 
+    // 💀 DERROTA
     if (tentativasRestantes === 0) {
         somDerrota();
         mostrarMensagem(`💀 Perdeu! Era ${numeroSecreto}`, "erro");
@@ -160,6 +175,7 @@ function chutar() {
         return;
     }
 
+    // 🔄 CONTINUA JOGO
     if (valor < numeroSecreto) {
         mostrarMensagem("📈 É MAIOR!", "dica");
     } else {
@@ -207,6 +223,8 @@ function salvarRanking(pontos) {
 function mostrarRanking() {
     let ranking = JSON.parse(localStorage.getItem("ranking")) || [];
     const lista = document.getElementById("ranking");
+
+    if (!lista) return;
 
     lista.innerHTML = "";
 
